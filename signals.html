@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crowdsourced Signals - FleetPulse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    html, body { height: 100%; }
+    
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 3px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+
+    /* Subtle card hover */
+    .signal-card {
+      transition: all 0.2s ease;
+    }
+    .signal-card:hover {
+      transform: translateX(2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-white">
+  
+  <!-- HEADER -->
+  <header class="border-b border-slate-200 px-6 py-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-slate-800">Crowdsourced Signals</h1>
+          <p class="text-sm text-slate-500">Real-time rider observations • Anomaly detection active</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-2">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+          Filter
+        </button>
+        <button class="px-4 py-2 bg-rose-500 text-white rounded-lg text-sm font-medium hover:bg-rose-600 transition-colors flex items-center gap-2">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="h-[calc(100vh-81px)] overflow-auto custom-scroll">
+    <div class="p-6">
+      
+      <!-- Signal Aggregation Flow Card -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 mb-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5.636 18.364a9 9 0 0 1 0-12.728m12.728 0a9 9 0 0 1 0 12.728M8.464 15.536a5 5 0 0 1 0-7.072m7.072 0a5 5 0 0 1 0 7.072"/>
+              <circle cx="12" cy="12" r="1"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-800">Signal Aggregation Flow</h2>
+            <p class="text-sm text-slate-500">How crowdsourced data becomes early warnings</p>
+          </div>
+        </div>
+
+        <div class="flex items-start justify-between">
+          <!-- Riders Column -->
+          <div>
+            <p class="text-xs text-slate-400 font-medium mb-3 ml-1">Riders</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 pr-6">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-700">Student A</p>
+                  <p class="text-xs text-slate-400">Delay spotted</p>
+                </div>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-300 ml-2" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+              </div>
+              <div class="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 pr-6">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-700">Student B</p>
+                  <p class="text-xs text-slate-400">Bus crowded</p>
+                </div>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-300 ml-2" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+              </div>
+              <div class="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 pr-6">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-700">Student C</p>
+                  <p class="text-xs text-slate-400">Route change</p>
+                </div>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-300 ml-2" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+              </div>
+              <div class="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 pr-6">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-700">Student D</p>
+                  <p class="text-xs text-slate-400">Braking issue</p>
+                </div>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-300 ml-2" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+              </div>
+              <div class="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3 pr-6">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-700">Student E</p>
+                  <p class="text-xs text-slate-400">Late arrival</p>
+                </div>
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-slate-300 ml-2" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Flow Visualization - Animated SVG -->
+          <div class="flex-1 flex items-center justify-center px-2">
+            <svg viewBox="0 0 400 280" class="w-full max-w-lg" style="min-width: 320px;">
+              <!-- Curved paths from left side - aligned to 5 student card positions -->
+              <path d="M 0 28 Q 80 28, 160 140" stroke="#93c5fd" stroke-width="2" fill="none" stroke-dasharray="6,6" opacity="0.6"/>
+              <path d="M 0 78 Q 80 78, 160 140" stroke="#93c5fd" stroke-width="2" fill="none" stroke-dasharray="6,6" opacity="0.6"/>
+              <path d="M 0 128 Q 80 128, 160 140" stroke="#93c5fd" stroke-width="2" fill="none" stroke-dasharray="6,6" opacity="0.6"/>
+              <path d="M 0 178 Q 80 178, 160 140" stroke="#93c5fd" stroke-width="2" fill="none" stroke-dasharray="6,6" opacity="0.6"/>
+              <path d="M 0 228 Q 80 228, 160 140" stroke="#93c5fd" stroke-width="2" fill="none" stroke-dasharray="6,6" opacity="0.6"/>
+
+              <!-- Curved paths to right side - aligned to 3 warning cards -->
+              <path d="M 240 140 Q 320 140, 400 56" stroke="#fca5a5" stroke-width="2" fill="none" stroke-dasharray="6,6" opacity="0.6"/>
+              <path d="M 240 140 Q 320 140, 400 140" stroke="#fca5a5" stroke-width="2" fill="none" stroke-dasharray="6,6" opacity="0.6"/>
+              <path d="M 240 140 Q 320 140, 400 224" stroke="#fca5a5" stroke-width="2" fill="none" stroke-dasharray="6,6" opacity="0.6"/>
+
+              <!-- Animated blue dots - Student A path -->
+              <circle r="5" fill="#60a5fa">
+                <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0 28 Q 80 28, 160 140"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2.5s" repeatCount="indefinite"/>
+              </circle>
+              
+              <!-- Student B path -->
+              <circle r="5" fill="#60a5fa">
+                <animateMotion dur="2.3s" repeatCount="indefinite" begin="0.4s" path="M 0 78 Q 80 78, 160 140"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2.3s" repeatCount="indefinite" begin="0.4s"/>
+              </circle>
+              <circle r="5" fill="#60a5fa">
+                <animateMotion dur="2.3s" repeatCount="indefinite" begin="1.6s" path="M 0 78 Q 80 78, 160 140"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2.3s" repeatCount="indefinite" begin="1.6s"/>
+              </circle>
+              
+              <!-- Student C path -->
+              <circle r="5" fill="#60a5fa">
+                <animateMotion dur="2s" repeatCount="indefinite" begin="0.8s" path="M 0 128 Q 80 128, 160 140"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2s" repeatCount="indefinite" begin="0.8s"/>
+              </circle>
+
+              <!-- Student D path -->
+              <circle r="5" fill="#60a5fa">
+                <animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s" path="M 0 178 Q 80 178, 160 140"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2.4s" repeatCount="indefinite" begin="1.2s"/>
+              </circle>
+
+              <!-- Student E path -->
+              <circle r="5" fill="#60a5fa">
+                <animateMotion dur="2.6s" repeatCount="indefinite" begin="0.2s" path="M 0 228 Q 80 228, 160 140"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2.6s" repeatCount="indefinite" begin="0.2s"/>
+              </circle>
+
+              <!-- Center aggregation box -->
+              <rect x="160" y="100" width="80" height="80" rx="16" fill="#d1fae5" stroke="#6ee7b7" stroke-width="2"/>
+              <svg x="180" y="116" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+              </svg>
+
+              <!-- Animated red/coral dots - to Anomaly Detected -->
+              <circle r="5" fill="#f87171">
+                <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.2s" path="M 240 140 Q 320 140, 400 56"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2.5s" repeatCount="indefinite" begin="0.2s"/>
+              </circle>
+              
+              <!-- to Pattern Emerging -->
+              <circle r="5" fill="#f87171">
+                <animateMotion dur="2s" repeatCount="indefinite" begin="0.7s" path="M 240 140 Q 320 140, 400 140"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2s" repeatCount="indefinite" begin="0.7s"/>
+              </circle>
+              <circle r="5" fill="#f87171">
+                <animateMotion dur="2s" repeatCount="indefinite" begin="1.7s" path="M 240 140 Q 320 140, 400 140"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2s" repeatCount="indefinite" begin="1.7s"/>
+              </circle>
+
+              <!-- to Signal Verified -->
+              <circle r="5" fill="#f87171">
+                <animateMotion dur="2.6s" repeatCount="indefinite" begin="1s" path="M 240 140 Q 320 140, 400 224"/>
+                <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.1;0.5;0.9;1" dur="2.6s" repeatCount="indefinite" begin="1s"/>
+              </circle>
+
+              <!-- Labels -->
+              <text x="200" y="205" text-anchor="middle" class="text-sm font-semibold" fill="#374151">Aggregation</text>
+              <text x="200" y="222" text-anchor="middle" class="text-xs" fill="#9ca3af">Pattern Detection</text>
+            </svg>
+          </div>
+
+          <!-- Early Warnings Column -->
+          <div>
+            <p class="text-xs text-emerald-600 font-medium mb-3 ml-1">Early Warnings</p>
+            <div class="space-y-2">
+              <div class="bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                      <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-slate-700">Anomaly Detected</p>
+                    <p class="text-xs text-slate-500">SH-042 • 94% confidence</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                      <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-slate-700">Pattern Emerging</p>
+                    <p class="text-xs text-slate-500">Route deviation • 78%</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-slate-700">Signal Verified</p>
+                    <p class="text-xs text-slate-500">12 confirmations</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4 ml-1">Crowd detects issues <span class="text-emerald-600 font-semibold">4.2 min</span> before sensors</p>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-6 text-xs">
+            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span>Raw Observations</span>
+            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>Processing</span>
+            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>Alerts</span>
+          </div>
+          <p class="text-sm text-slate-500"><span class="font-semibold text-slate-700">156</span> active reporters</p>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-12 gap-6">
+        
+        <!-- Left Column: Live Signal Feed -->
+        <div class="col-span-8">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-bold text-slate-800">Live Signal Feed</h2>
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+              <span class="text-sm text-slate-500">Live</span>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <!-- Signal Card 1 -->
+            <div class="bg-white rounded-xl border-l-4 border-l-amber-400 border border-slate-200 p-4 signal-card">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <h3 class="text-sm font-semibold text-slate-800">Shuttle 042 running behind schedule</h3>
+                      <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-medium rounded">Verified</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-2">Multiple riders report 8-10 min delay on North Campus Loop. Vehicle showing unusual stop patterns.</p>
+                    <div class="flex items-center gap-4 text-xs text-slate-400">
+                      <span class="flex items-center gap-1">
+                        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                        </svg>
+                        12 reports
+                      </span>
+                      <span class="bg-slate-100 px-2 py-1 rounded font-mono text-slate-600">SH-042</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right shrink-0 ml-4">
+                  <div class="flex items-center gap-2 mb-1">
+                    <div class="w-20 h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div class="w-[94%] h-full bg-emerald-500 rounded-full"></div>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-700">94%</span>
+                  </div>
+                  <span class="text-xs text-slate-400">2m ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Signal Card 2 -->
+            <div class="bg-white rounded-xl border-l-4 border-l-red-400 border border-slate-200 p-4 signal-card">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 24 24" class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                      <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <h3 class="text-sm font-semibold text-slate-800">Unusual braking detected</h3>
+                      <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-medium rounded">Emerging</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-2">Riders reporting jerky braking on Union Express. Pattern matches early brake wear signature.</p>
+                    <div class="flex items-center gap-4 text-xs text-slate-400">
+                      <span class="flex items-center gap-1">
+                        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                        </svg>
+                        7 reports
+                      </span>
+                      <span class="bg-slate-100 px-2 py-1 rounded font-mono text-slate-600">SH-018</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right shrink-0 ml-4">
+                  <div class="flex items-center gap-2 mb-1">
+                    <div class="w-20 h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div class="w-[78%] h-full bg-amber-500 rounded-full"></div>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-700">78%</span>
+                  </div>
+                  <span class="text-xs text-slate-400">8m ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Signal Card 3 -->
+            <div class="bg-white rounded-xl border-l-4 border-l-blue-400 border border-slate-200 p-4 signal-card">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 24 24" class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <h3 class="text-sm font-semibold text-slate-800">High capacity at Library stop</h3>
+                      <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-medium rounded">Verified</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-2">Overcrowding reported. Historical pattern suggests need for additional vehicle deployment.</p>
+                    <div class="flex items-center gap-4 text-xs text-slate-400">
+                      <span class="flex items-center gap-1">
+                        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                        </svg>
+                        15 reports
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right shrink-0 ml-4">
+                  <div class="flex items-center gap-2 mb-1">
+                    <div class="w-20 h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div class="w-[89%] h-full bg-emerald-500 rounded-full"></div>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-700">89%</span>
+                  </div>
+                  <span class="text-xs text-slate-400">5m ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Signal Card 4 -->
+            <div class="bg-white rounded-xl border-l-4 border-l-emerald-400 border border-slate-200 p-4 signal-card">
+              <div class="flex items-start justify-between">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 24 24" class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <h3 class="text-sm font-semibold text-slate-800">Route deviation confirmed</h3>
+                      <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-medium rounded">Resolved</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-2">Construction on Main St causing alternate routing. Riders confirm 3-minute detour.</p>
+                    <div class="flex items-center gap-4 text-xs text-slate-400">
+                      <span class="flex items-center gap-1">
+                        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                        </svg>
+                        4 reports
+                      </span>
+                      <span class="bg-slate-100 px-2 py-1 rounded font-mono text-slate-600">SC-007</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right shrink-0 ml-4">
+                  <div class="flex items-center gap-2 mb-1">
+                    <div class="w-20 h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div class="w-[65%] h-full bg-amber-400 rounded-full"></div>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-700">65%</span>
+                  </div>
+                  <span class="text-xs text-slate-400">12m ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detected Patterns -->
+          <h2 class="text-base font-bold text-slate-800 mt-8 mb-4">Detected Patterns</h2>
+          <div class="space-y-3">
+            <!-- Pattern 1 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-md transition-shadow cursor-pointer">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-sm font-semibold text-slate-800">Pre-failure Battery Signature</h3>
+                      <span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded">High</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mt-1">3 vehicles showing charge patterns that historically precede battery degradation within 14 days.</p>
+                    <div class="flex items-center gap-2 mt-2">
+                      <span class="bg-slate-100 px-2 py-1 rounded text-xs font-mono text-slate-600">SH-042</span>
+                      <span class="bg-slate-100 px-2 py-1 rounded text-xs font-mono text-slate-600">SH-031</span>
+                      <span class="bg-slate-100 px-2 py-1 rounded text-xs font-mono text-slate-600">SC-003</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right flex items-center gap-3">
+                  <p class="text-xs text-slate-400">Pattern emerged 2h ago</p>
+                  <svg viewBox="0 0 24 24" class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pattern 2 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-4 hover:shadow-md transition-shadow cursor-pointer">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-sm font-semibold text-slate-800">Rush Hour Anomaly</h3>
+                      <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-medium rounded">Medium</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mt-1">Departure times deviating 15% from historical norms on North route during 8-9 AM window.</p>
+                    <div class="flex items-center gap-2 mt-2">
+                      <span class="bg-slate-100 px-2 py-1 rounded text-xs font-mono text-slate-600">SH-018</span>
+                      <span class="bg-slate-100 px-2 py-1 rounded text-xs font-mono text-slate-600">SH-042</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right flex items-center gap-3">
+                  <p class="text-xs text-slate-400">Detected today</p>
+                  <svg viewBox="0 0 24 24" class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Stats Sidebar -->
+        <div class="col-span-4 space-y-4">
+          <!-- Signal Aggregation Stats -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-9 h-9 bg-slate-100 rounded-xl flex items-center justify-center">
+                <svg viewBox="0 0 24 24" class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5.636 18.364a9 9 0 0 1 0-12.728m12.728 0a9 9 0 0 1 0 12.728"/>
+                  <circle cx="12" cy="12" r="1"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-slate-700">Signal Aggregation</h3>
+                <p class="text-xs text-slate-400">Real-time crowdsourced data</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-x-6 gap-y-4 mb-5">
+              <div>
+                <p class="text-3xl font-bold text-slate-800">47</p>
+                <p class="text-xs text-slate-400">Total Signals</p>
+              </div>
+              <div>
+                <p class="text-3xl font-bold text-emerald-600">31</p>
+                <p class="text-xs text-slate-400">Verified</p>
+              </div>
+              <div>
+                <p class="text-3xl font-bold text-blue-600">156</p>
+                <p class="text-xs text-slate-400">Active Reporters</p>
+              </div>
+              <div>
+                <p class="text-3xl font-bold text-slate-800">92<span class="text-lg">%</span></p>
+                <p class="text-xs text-slate-400">Accuracy Rate</p>
+              </div>
+            </div>
+            <div class="border-t border-slate-100 pt-5">
+              <div class="flex items-center justify-between text-xs mb-2">
+                <span class="text-slate-500">System vs Crowd Detection</span>
+                <span class="text-slate-600 font-medium">Crowd leads by 4.2 min avg</span>
+              </div>
+              <div class="flex h-2.5 rounded-full overflow-hidden">
+                <div class="w-[62%] bg-emerald-500"></div>
+                <div class="w-[38%] bg-slate-200"></div>
+              </div>
+              <div class="flex justify-between text-xs mt-2">
+                <span class="text-emerald-600 font-medium">Crowd First (62%)</span>
+                <span class="text-slate-400">System First (38%)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deviation Tracking -->
+          <div class="bg-white rounded-xl border border-slate-200 p-5">
+            <h3 class="text-sm font-bold text-slate-700 mb-5">Deviation Tracking</h3>
+            <div class="space-y-5">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-slate-400 mb-1">Avg Trip Duration</p>
+                  <p class="text-2xl font-bold text-slate-800">18<span class="text-sm font-normal text-slate-500 ml-1">min</span></p>
+                  <p class="text-xs text-slate-400">Baseline: 14min</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                  <span class="text-sm font-semibold text-rose-500">↗ +29%</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-slate-400 mb-1">On-Time Performance</p>
+                  <p class="text-2xl font-bold text-slate-800">87<span class="text-sm font-normal text-slate-500 ml-1">%</span></p>
+                  <p class="text-xs text-slate-400">Baseline: 94%</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-2.5 h-2.5 rounded-full bg-rose-400"></div>
+                  <span class="text-sm font-semibold text-rose-500">↘ -7%</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-slate-400 mb-1">Rider Reports/Hour</p>
+                  <p class="text-2xl font-bold text-slate-800">24</p>
+                  <p class="text-xs text-slate-400">Baseline: 18</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                  <span class="text-sm font-semibold text-emerald-500">↗ +33%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quote Card -->
+          <div class="bg-slate-50 rounded-xl border border-slate-200 p-5">
+            <p class="text-sm text-slate-600 italic leading-relaxed">"Predictive signals include not just hardware telemetry, but deviation patterns like vehicles behaving differently from their historical norms."</p>
+            <div class="flex items-center gap-2 mt-4">
+              <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+              <span class="text-xs text-slate-400">Anomaly detection philosophy</span>
+            </div>
+          </div>
+
+          <!-- Back Button -->
+          <a href="index.html" class="block w-full text-center px-4 py-3 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors">
+            ← Back to Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
